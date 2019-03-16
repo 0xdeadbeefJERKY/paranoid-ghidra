@@ -4,7 +4,6 @@ export DEBIAN_FRONTEND=noninteractive
  
 sudo apt-get update
 sudo apt-get install -y git tmux wget xfce4 xfce4-goodies unzip
-#sudo apt-get install -y git tmux wget ubuntu-gnome-desktop unzip
 sudo apt-get install -y tightvncserver
 
 wget https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz -O /tmp/openjdk-11.0.2_linux-x64_bin.tar.gz
@@ -25,7 +24,6 @@ cat > ~/.vnc/xstartup <<- "EOF"
 #!/bin/sh
 #xrdb $HOME/.Xresources
 startxfce4 &
-#gnome-session &
 EOF
 
 chmod +x ~/.vnc/xstartup
