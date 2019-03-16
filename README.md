@@ -1,5 +1,33 @@
 # paranoid-ghidra
 
+## Installation
+1. [Install Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html)
+2. Make Digital Ocean API token available to Terraform
+    ```bash
+    export DIGITALOCEAN_TOKEN=insertokenhere
+    ```
+3. [OPTIONAL] Capture more verbose Terraform logging:
+    ```bash
+    export TF_LOG=TRACE
+    export TF_LOG_PATH=$PWD/terraform.log
+    ```
+4. Initialize Terraform (e.g., download necessary plugins)
+    ```bash
+    terraform init
+    ```
+5. Output what will happen when you run `terraform apply`
+    ```bash
+    terraform plan
+    ```
+6. Deploy Droplet (execute plan)
+    ```bash
+    terraform apply
+    ```
+7. Run SSH port forward command (`connect_cmd` from `terraform output`)
+8. Download [TightVNC](https://www.tightvnc.com/download.php) and *only* select TightVNC Viewer (VNC client)
+9. Connect to `localhost:5901` using TightVNC Viewer and randomly generated VNC password (`vnc_pass` from `terraform output`)
+10. If the desktop session displays a gray screen (see [Issues](#issues)), use `start_vnc` commands from `terraform output` 
+
 ## Why?
 For those who need a template for running software like ghidra on anything that's *not* your machine.
 
