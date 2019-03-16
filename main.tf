@@ -59,8 +59,9 @@ resource "digitalocean_droplet" "ghidra" {
     private_networking = true
     backups = false
     ipv6 = true
-    //user_data = "${data.template_file.bootstrap.rendered}"
 
+    // sleep for 3 minutes to allow for Droplet to fully initialize
+    // before executing bootstrap script
     provisioner "local-exec" {
         command = "sleep 180"
     }
