@@ -11,4 +11,4 @@ resolution = "1920x1080"
 #source_addr = ["0.0.0.0/0", "::/0"]
 # Choose your desktop environment. Supported values are
 # GNOME and xfce4 
-desktop = ""
+desktop = "GNOME"

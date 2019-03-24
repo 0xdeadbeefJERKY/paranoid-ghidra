@@ -158,11 +158,3 @@ data "template_file" "bootstrap" {
         mode = "${var.desktop}"
     }
 }
-
-/*
-resource "null_resource" "gen_ssh_config" {
-  triggers {
-    template_rendered = "${data.template_file.ssh_config.rendered}"
-  }
-}
-*/
