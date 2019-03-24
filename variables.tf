@@ -10,7 +10,7 @@ variable "region" {
 }
 variable "size" {
     type = "string"
-    default = "s-2vcpu-2gb"
+    default = "s-2vcpu-4gb"
     description = "Droplet size (number of vCPUs and amount of RAM)"
 }
 variable "name" {
@@ -21,7 +21,7 @@ variable "name" {
 
 variable "resolution" {
     type = "string"
-    default = "3440x1440"
+    default = "1920x1080"
     description = "Resolution of VNC desktop session"
 }
 
@@ -60,14 +60,20 @@ variable "chmod_command" {
   description = "chmod command to avoid SSH error regarding open private key file permissions"
 }
 
-variable "do_ssh_key_name" {
-  type        = "string"
-  default     = "Paranoid-GHIDRA-Key"
-  description = "Name of SSH key added to Digital Ocean for Droplet access"
+variable "desktop" {
+    type = "string"
+    default = "GNOME"
+    description = "Ubuntu desktop environment to use (only GNOME and xfce4 are supported for now)"
 }
 
-variable "do_firewall_name" {
-  type        = "string"
-  default     = "Paranoid-GHIDRA-Firewall"
-  description = "Name of Digital Ocean firewall assigned to Droplet"
+variable "gnome_packages" {
+    type = "string"
+    default = "ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal"
+    description = "Ubuntu gnome desktop apt packages to install"
+}
+
+variable "xfce4_packages" {
+    type = "string"
+    default = "xfce4 xfce4-goodies"
+    description = "Ubuntu xfce4 desktop apt packages to install"
 }

@@ -27,7 +27,13 @@
 8. Run SSH port forward command (`connect_cmd` from `terraform output`)
 9. Download [TightVNC](https://www.tightvnc.com/download.php) and *only* select TightVNC Viewer (VNC client)
 10. Connect to `localhost:5901` using TightVNC Viewer and randomly generated VNC password (`vnc_pass` from `terraform output`)
-11. If the desktop session displays a gray screen (see [Issues](#issues)), use `start_vnc` commands from `terraform output` 
+11. If, for some reason, the VNC session is not working as expected, simply restart the `runvnc` service on the Droplet:
+    ```bash
+    # SSH into Droplet using generated private key and IP address:
+    # ssh -i <private_key> root@<droplet_ip>
+    systemctl stop runvnc
+    systemctl start runvnc
+    ```
 
 ## Why?
 For those who need a template for running software like ghidra on anything that's *not* your machine.
@@ -36,10 +42,16 @@ For those who need a template for running software like ghidra on anything that'
 Through the magic of Terraform and VPS providers (in this case, Digital Ocean)
 
 ## Issues
-* For some reason, provisioning the bootstrap shell script via Terraform doesn't properly initialize and configure the VNC session. Connecting to it results in an unusable desktop session (gray screen). Manually SCP'ing and executing the bootstrap script directly on the Droplet works just fine. I've attempted to resolve this by (1) provisioning an expect script and (2) providing the bootstrap script as userdata (commands to execute during Droplet initialization), but both of these approaches failed. To account for this, I've added a few commands as an output (`start_vnc`) that can be executed by the user to kill and restart the VNC server. 
+For some reason, provisioning the original bootstrap shell script via Terraform doesn't properly initialize and configure the VNC session. Connecting to it results in an unusable desktop session (gray screen). Manually SCP'ing and executing the bootstrap script directly on the Droplet works just fine. I've attempted to resolve this by:
+
+1. Provisioning an `expect` script; and
+2. Providing the bootstrap script as userdata (commands to execute during Droplet initialization)
+
+Unfortunately, both of these approaches failed. To account for this, I've automated the creation of a `systemd` service to facilitate management of `vncserver`. 
 
 ## Pro-Tips
-* `Ctrl+Alt+Shift+F` to exit full-screen mode in TightVNC client/viewer
+* `Ctrl+Alt+Shift+F` to enter/exit full-screen mode in TightVNC Viewer
 
 ## TO-DO
-* Need to provide variable that determines (either automatically or via user input) the desired VNC session resolution and feed that into `-geometry` flag for `vncserver`
+* Automatically determining the user's current resolution and providing that value to the `resolution` variable.
+* Add support for KDE and "generic" VNC sessions
